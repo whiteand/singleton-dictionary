@@ -1,5 +1,7 @@
 # Singleton Dictionary
 
+**Size: 203 B** (minified and gzipped). No dependencies. [Size Limit](https://github.com/ai/size-limit) controls the size.
+
 It's a data structure that allows you to store signletons. It has such interface:
 
 ```javascript
@@ -36,7 +38,7 @@ dict.release(10);
 
 // At this point garbage collector can collect this singleton
 
-dict.acquire(10)
+dict.acquire(10);
 //> 'created'
 //> { id: 10 }
 // This is a new object
