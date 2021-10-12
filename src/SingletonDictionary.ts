@@ -1,4 +1,7 @@
-export class SingletonDictionary<K extends number | string, V> {
+import { ISingletonDictionary } from './types';
+
+export class SingletonDictionary<K extends number | string, V>
+  implements ISingletonDictionary<K, V> {
   private valueFactory: (value: K) => V;
   private refsNumberDict: Partial<Record<K, number>>;
   private instances: Partial<Record<K, V>>;
@@ -20,19 +23,19 @@ export class SingletonDictionary<K extends number | string, V> {
     }
     return this.instances[k] as V;
   }
-  public release(k: K): boolean {
+  public release(k: K): number {
     const refNumber = this.getRefNumber(k);
     switch (refNumber) {
       case 0:
-        return false;
+        return 0;
       case 1: {
         delete this.refsNumberDict[k];
         delete this.instances[k];
-        return true;
+        return 0;
       }
       default:
         this.refsNumberDict[k] = refNumber - 1;
-        return true;
+        return refNumber - 1;
     }
   }
 }
