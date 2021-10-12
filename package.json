@@ -31,6 +31,10 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whiteand/singleton-dictionary.git"
+  },
   "name": "dictionary-of-singletons",
   "author": "andrewbeletskiy",
   "module": "dist/dictionary-of-singletons.esm.js",
