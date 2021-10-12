@@ -11,7 +11,7 @@ export class SingletonDictionary<K extends number | string, V>
     this.instances = {};
   }
   private getRefNumber(k: K): number {
-    const refNumber = this.refsNumberDict[k];
+    const refNumber = this.refsNumberDict[k] as number | undefined;
     return refNumber || 0;
   }
 
