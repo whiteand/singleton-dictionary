@@ -2,40 +2,37 @@ import { ISingletonDictionary } from './types';
 
 export class SingletonDictionary<K extends number | string, V>
   implements ISingletonDictionary<K, V> {
-  private valueFactory: (value: K) => V;
-  private refsNumberDict: Partial<Record<K, number>>;
-  private instances: Partial<Record<K, V>>;
-  constructor(valueFactory: (value: K) => V) {
-    this.valueFactory = valueFactory;
-    this.refsNumberDict = {};
-    this.instances = {};
+  private create: (value: K) => V;
+  private refs: Partial<Record<K, number>>;
+  private insts: Partial<Record<K, V>>;
+  constructor(singletonFactory: (value: K) => V) {
+    this.create = singletonFactory;
+    this.refs = {};
+    this.insts = {};
   }
   private getRefNumber(k: K): number {
-    const refNumber = this.refsNumberDict[k] as number | undefined;
+    const refNumber = this.refs[k] as number | undefined;
     return refNumber || 0;
   }
 
   public acquire(k: K): V {
     const newRefNumber = this.getRefNumber(k) + 1;
-    this.refsNumberDict[k] = newRefNumber;
+    this.refs[k] = newRefNumber;
     if (newRefNumber === 1) {
-      this.instances[k] = this.valueFactory(k);
+      this.insts[k] = this.create(k);
     }
-    return this.instances[k] as V;
+    return this.insts[k] as V;
   }
   public release(k: K): number {
-    const refNumber = this.getRefNumber(k);
-    switch (refNumber) {
-      case 0:
-        return 0;
-      case 1: {
-        delete this.refsNumberDict[k];
-        delete this.instances[k];
-        return 0;
-      }
-      default:
-        this.refsNumberDict[k] = refNumber - 1;
-        return refNumber - 1;
+    const r = this.getRefNumber(k);
+    if (r === 0) return 0;
+    if (r === 1) {
+      delete this.refs[k];
+      delete this.insts[k];
+      return 0;
     }
+    const nr = r - 1;
+    this.refs[k] = nr;
+    return nr;
   }
 }
