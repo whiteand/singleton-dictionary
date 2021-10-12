@@ -35,16 +35,16 @@
     "type": "git",
     "url": "git+https://github.com/whiteand/singleton-dictionary.git"
   },
-  "name": "dictionary-of-singletons",
+  "name": "singleton-dictionary",
   "author": "andrewbeletskiy",
-  "module": "dist/dictionary-of-singletons.esm.js",
+  "module": "dist/singleton-dictionary.esm.js",
   "size-limit": [
     {
-      "path": "dist/dictionary-of-singletons.cjs.production.min.js",
+      "path": "dist/singleton-dictionary.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/dictionary-of-singletons.esm.js",
+      "path": "dist/singleton-dictionary.esm.js",
       "limit": "10 KB"
     }
   ],
